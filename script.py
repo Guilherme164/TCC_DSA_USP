@@ -35,6 +35,12 @@ df1_3d = df_acidentes_filtrado.groupby('causa_acidente').agg(
     qtd_feridos=('feridos', 'sum') 
 ).reset_index()
 
+fig = px.scatter(df1_3d, 
+                 x='qtd_acidentes', 
+                 y='qtd_mortos', 
+                 hover_data=['causa_acidente']) 
+fig.update_traces(marker=dict(size=15)) 
+fig.show()
 #%%[6] Fazendo top 30 para reduzir volume de categorias da variavel
 top_30 = df1_3d.nlargest(30, 'qtd_acidentes')
 #%%[7] dispersão simples
@@ -42,6 +48,7 @@ fig = px.scatter(top_30,
                  x='qtd_acidentes', 
                  y='qtd_mortos', 
                  hover_data=['causa_acidente']) 
+fig.update_traces(marker=dict(size=15)) 
 fig.show()
 #%%[8] kmeans com top3
 ac = top_30.drop(columns=['causa_acidente'])
@@ -94,6 +101,7 @@ fig = px.scatter(top_30,
                     x='qtd_acidentes',
                     color='cluster_kmeans',                                        
                     hover_data= ['causa_acidente'])
+fig.update_traces(marker=dict(size=15)) 
 fig.show()
 #%% [15] Cria um novo dataset
 # Aqui decidi separar o cluster pela variavel tipo_pista para ver melhor, já q no BI mostrou que as variaveis estao distribuidas diferentemente
@@ -246,7 +254,7 @@ plt.plot(K_m, elbow_m, marker='o')
 plt.xlabel('Nº Clusters', fontsize=16)
 plt.xticks(range(1,10))
 plt.ylabel('WCSS', fontsize=16)
-plt.title('Método de Elbow', fontsize=16)
+plt.title('Método de Elbow - Pista Multipla', fontsize=16)
 plt.show()
 
 
