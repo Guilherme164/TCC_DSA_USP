@@ -55,11 +55,7 @@ ac = top_30.drop(columns=['causa_acidente'])
 kmeans = KMeans(n_clusters=3, init='random', random_state=100).fit(ac)
 est_pad = ac.apply(zscore, ddof=1)
 
-
-#%%[9] aplicando kmeans
-kmeans = KMeans(n_clusters=3, init='random', random_state=100).fit(ac)
-
-#%%[10]
+#%%[10] Adicionando os labels no dataframe
 kmeans_clusters = kmeans.labels_
 top_30['cluster_kmeans'] = kmeans_clusters
 top_30['cluster_kmeans'] = top_30['cluster_kmeans'].astype('category')
@@ -68,7 +64,6 @@ cent_finais = pd.DataFrame(kmeans.cluster_centers_)
 cent_finais.columns = ac.columns
 cent_finais.index.name = 'cluster'
 cent_finais
-
 
 #%% [12] plotando centroides iedntifiquei que não ficou bem distribuido por causa do "outlier"
 plt.figure(figsize=(8,8))
@@ -138,7 +133,6 @@ cent_finais_s = pd.DataFrame(kmeans_s.cluster_centers_)
 cent_finais_s.columns = df_s.columns
 cent_finais_s.index.name = 'cluster'
 cent_finais_s
-
 
 #%% [24]plotando centroides
 plt.figure(figsize=(8,8))
