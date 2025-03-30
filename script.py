@@ -117,7 +117,7 @@ df_s_agg = df_simples.groupby(['tipo_pista', 'causa_acidente']).agg(
     qtd_ilesos=('ilesos', 'sum'),
     qtd_feridos=('feridos', 'sum') 
 ).reset_index()
-
+df_s_agg = df_s_agg.nlargest(30, 'qtd_acidentes')
 #%% [20] Separando dataset
 df_s = df_s_agg.drop(columns=['tipo_pista','causa_acidente'])
 #%% [21] Criando Kmeans
@@ -187,7 +187,7 @@ df_d_agg = df_dupla.groupby(['tipo_pista', 'causa_acidente']).agg(
     qtd_ilesos=('ilesos', 'sum'),
     qtd_feridos=('feridos', 'sum') 
 ).reset_index()
-
+df_d_agg = df_d_agg.nlargest(30, 'qtd_acidentes')
 #%% [29] Separando dataset
 df_d = df_d_agg.drop(columns=['tipo_pista','causa_acidente'])
 
@@ -232,7 +232,7 @@ df_m_agg = df_multipla.groupby(['tipo_pista', 'causa_acidente']).agg(
     qtd_ilesos=('ilesos', 'sum'),
     qtd_feridos=('feridos', 'sum') 
 ).reset_index()
-
+df_m_agg = df_m_agg.nlargest(30, 'qtd_acidentes')
 #%% [33] Separando dataset
 df_m = df_m_agg.drop(columns=['tipo_pista','causa_acidente'])
 
@@ -302,5 +302,11 @@ fig = px.scatter(df_m_agg,
                     size = 'qtd_mortos',
                     hover_data=['causa_acidente'])
 fig.show()
+
+
+#%% 
+df_s_agg.to_csv('df_s_agg.csv', sep=';', encoding='utf-8', index=False)
+df_d_agg.to_csv('df_d_agg.csv', sep=';', encoding='utf-8', index=False)
+df_m_agg.to_csv('df_m_agg.csv', sep=';', encoding='utf-8', index=False)
 
 
